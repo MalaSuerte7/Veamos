@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 import mysql.connector
-import schemas
 
 app = FastAPI()
 
@@ -10,6 +9,15 @@ port_number = "8005"
 user_name = "admin"
 password_db = "CC-utec_2024-s3"
 database_name = "entrenadores"
+
+# Estructura para representar un entrenador
+class Trainer:
+    def __init__(self, nombre: str, apellido: str, medallas: int, fecha_nacimiento: str, edad: int):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.medallas = medallas
+        self.fecha_nacimiento = fecha_nacimiento
+        self.edad = edad
 
 # Get all trainers
 @app.get("/trainers")
@@ -33,7 +41,7 @@ def get_trainer(id: int):
 
 # Add a new trainer
 @app.post("/trainers")
-def add_trainer(item: schemas.Trainer):
+def add_trainer(item: Trainer):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)
     nombre = item.nombre
     apellido = item.apellido
@@ -50,7 +58,7 @@ def add_trainer(item: schemas.Trainer):
 
 # Modify a trainer
 @app.put("/trainers/{id}")
-def update_trainer(id: int, item: schemas.Trainer):
+def update_trainer(id: int, item: Trainer):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)
     nombre = item.nombre
     apellido = item.apellido
