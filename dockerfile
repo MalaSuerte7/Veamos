@@ -1,7 +1,5 @@
 FROM python:3-slim
 WORKDIR /programas/entrenadores
-RUN pip3 install fastapi
-RUN pip3 install pydantic
-RUN pip3 install mysql-connector-python
+RUN pip3 install fastapi uvicorn pydantic mysql-connector-python
 COPY . .
-CMD ["fastapi", "run", "./main.py", "--port", "8005"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8005"]
