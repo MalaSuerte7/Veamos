@@ -5,7 +5,7 @@ import mysql.connector
 app = FastAPI()
 
 # Database connection information
-host_name = "34.239.20.242"  # ruta no correcta
+host_name = "database-1.crlz1rjtrz0e.us-east-1.rds.amazonaws.com"
 port_number = "3306"  # El puerto para MySQL es normalmente 3306, no 8005
 user_name = "admin"
 password_db = "CC-utec_2024-s3"
