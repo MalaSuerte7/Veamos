@@ -36,12 +36,13 @@ class pokemon_de_entrenador(BaseModel):
     HP: int
     tipo: str
 
-# objetos_de_entrenador
-class objetos_de_entrenador(BaseModel):
+# objetos_de_entrenadoc
+class objetos_de_entrenadoc(BaseModel):
     id: int
     nombre_entrenador: str
-    id_entrenador: str
+    id_entrenador: int
     nombre_objeto: str
+    id_objeto: int
     cantidad: int
 
 # Builds 
@@ -169,11 +170,11 @@ def crear_pokemon_de_entrenador(nombre_entrenador: str, nombre_pokemon: str, id_
     return {"message": "Pokemon created successfully"}
 
 # Show trainer inventory
-@app.get("/objetos_de_entrenador/{id_entrenador}")
-def get_objetos_de_entrenador(id_entrenador: int):
+@app.get("/objetos_de_entrenadoc/{id_entrenador}")
+def get_objetos_de_entrenadoc(id_entrenador: int):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)
     cursor = mydb.cursor()
-    cursor.execute(f"SELECT * FROM objetos_de_entrenador WHERE id_entrenador = {id_entrenador}")
+    cursor.execute(f"SELECT * FROM objetos_de_entrenadoc WHERE id_entrenador = {id_entrenador}")
     result = cursor.fetchall()
     mydb.close()
     objetos = []
@@ -186,7 +187,7 @@ def get_objetos_de_entrenador(id_entrenador: int):
 def crear_objeto_de_entrenador(id_entrenador: int, id_objeto: int, cantidad: int, nombre_objeto: str):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)
     cursor = mydb.cursor()
-    cursor.execute(f"INSERT INTO objetos_de_entrenador (id_entrenador, id_objeto, cantidad, nombre_objeto) VALUES ({id_entrenador}, {id_objeto}, {cantidad}, '{nombre_objeto}')")
+    cursor.execute(f"INSERT INTO objetos_de_entrenadoc (id_entrenador, id_objeto, cantidad, nombre_objeto) VALUES ({id_entrenador}, {id_objeto}, {cantidad}, '{nombre_objeto}')")
     mydb.commit()
     mydb.close()
     return {"message": "Object created successfully"}
@@ -196,7 +197,7 @@ def crear_objeto_de_entrenador(id_entrenador: int, id_objeto: int, cantidad: int
 def modificar_objeto_de_entrenador(id_entrenador: int, id_objeto: int, cantidad: int):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)
     cursor = mydb.cursor()
-    cursor.execute(f"UPDATE objetos_de_entrenador SET cantidad = {cantidad} WHERE id_entrenador = {id_entrenador} AND id_objeto = {id_objeto}")
+    cursor.execute(f"UPDATE objetos_de_entrenadoc SET cantidad = {cantidad} WHERE id_entrenador = {id_entrenador} AND id_objeto = {id_objeto}")
     mydb.commit()
     mydb.close()
     return {"message": "Object modified successfully"}
