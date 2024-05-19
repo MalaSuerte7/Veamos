@@ -10,14 +10,6 @@ origins = [
     "*", #Todos los origenes 
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Database connection information
 host_name = "database-1.crlz1rjtrz0e.us-east-1.rds.amazonaws.com"
 port_number = "3306"  # El puerto para MySQL es normalmente 3306, no 8005
@@ -160,3 +152,10 @@ def modificar_objeto_de_entrenador(id_entrenador: int, id_objeto: int, cantidad:
     mydb.commit()
     mydb.close()
     return {"message": "Object modified successfully"}
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
