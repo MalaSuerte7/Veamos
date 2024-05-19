@@ -44,6 +44,40 @@ class objetos_de_entrenador(BaseModel):
     nombre_objeto: str
     cantidad: int
 
+# Builds 
+
+# Función para construir un objeto entrenador
+def build_trainer_object(data):
+    return {
+        "id": data[0],
+        "nombre": data[1],
+        "dinero": data[2]
+    }
+
+# Función para construir un objeto pokemon de entrenador
+def build_pokemon_de_entrenador_object(data):
+    return {
+        "id": data[0],
+        "nombre_entrenador": data[1],
+        "nombre_pokemon": data[2],
+        "id_pokemon": data[3],
+        "id_entrenador": data[4],
+        "sprite": data[5],
+        "nivel": data[6],
+        "HP": data[7],
+        "tipo": data[8]
+    }
+
+# Función para construir un objeto de entrenador
+def build_objeto_de_entrenador_object(data):
+    return {
+        "id": data[0],
+        "nombre_entrenador": data[1],
+        "id_entrenador": data[2],
+        "nombre_objeto": data[3],
+        "cantidad": data[4]
+    }
+
 # Get all trainers
 @app.get("/trainers")
 def get_trainers():
@@ -52,7 +86,12 @@ def get_trainers():
     cursor.execute("SELECT * FROM entrenadores")
     result = cursor.fetchall()
     mydb.close()
-    return {"trainers": result}
+    
+    trainers = []
+    for data in result:
+        trainers.append(build_trainer_object(data))
+    return {"trainers": trainers}
+
 
 # Get a trainer by ID
 @app.get("/trainers/{id}")
@@ -62,7 +101,9 @@ def get_trainer(id: int):
     cursor.execute(f"SELECT * FROM entrenadores WHERE entrenador_id = {id}")
     result = cursor.fetchone()
     mydb.close()
-    return {"trainer": result}
+    
+    trainer = build_trainer_object(result)
+    return {"trainer": trainer}
 
 # Add a new trainer
 @app.post("/trainers")
@@ -111,7 +152,11 @@ def get_pokemons_de_entrenador(id_entrenador: int):
     cursor.execute(f"SELECT * FROM pokemons_de_entrenador WHERE id_entrenador = {id_entrenador}")
     result = cursor.fetchall()
     mydb.close()
-    return {"pokemons": result}
+    pokemons = []
+    for data in result:
+        pokemons.append(build_pokemon_de_entrenador_object(data))
+    return {"pokemons": pokemons}
+
 
 # Create a new pokemon for a trainer
 @app.post("/crear_pokemon_de_entrenador")
@@ -131,7 +176,10 @@ def get_objetos_de_entrenador(id_entrenador: int):
     cursor.execute(f"SELECT * FROM objetos_de_entrenador WHERE id_entrenador = {id_entrenador}")
     result = cursor.fetchall()
     mydb.close()
-    return {"objects": result}
+    objetos = []
+    for data in result:
+        objetos.append(build_objeto_de_entrenador_object(data))
+    return {"objetos": objetos}
 
 # Create a new object for a trainer
 @app.post("/crear_objeto_de_entrenador")
