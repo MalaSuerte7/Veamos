@@ -184,10 +184,10 @@ def get_objetos_de_entrenadoc(id_entrenador: int):
 
 # Create a new object for a trainer
 @app.post("/crear_objeto_de_entrenador")
-def crear_objeto_de_entrenador(id_entrenador: int, id_objeto: int, cantidad: int, nombre_objeto: str):
+def crear_objeto_de_entrenador(nombre_entrenador: str, id_entrenador: int, nombre_objeto: str, id_objeto: int, cantidad: int):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)
     cursor = mydb.cursor()
-    cursor.execute(f"INSERT INTO objetos_de_entrenadoc (id_entrenador, id_objeto, cantidad, nombre_objeto) VALUES ({id_entrenador}, {id_objeto}, {cantidad}, '{nombre_objeto}')")
+    cursor.execute(f"INSERT INTO objetos_de_entrenadoc (nombre_entrenador, id_entrenador, nombre_objeto, id_objeto, cantidad) VALUES ('{nombre_entrenador}', {id_entrenador}, '{nombre_objeto}', {id_objeto}, {cantidad})")
     mydb.commit()
     mydb.close()
     return {"message": "Object created successfully"}
