@@ -80,6 +80,11 @@ def build_objeto_de_entrenador_object(data):
         "cantidad": data[5]
     }
 
+# 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to your Pokemon API!"}
+
 # Get all trainers
 @app.get("/trainers")
 def get_trainers():
@@ -100,7 +105,7 @@ def get_trainers():
 def get_trainer(id: int):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)
     cursor = mydb.cursor()
-    cursor.execute(f"SELECT * FROM entrenadores WHERE entrenador_id = {id}")
+    cursor.execute(f"SELECT * FROM entrenadores WHERE id = {id}")
     result = cursor.fetchone()
     mydb.close()
     
