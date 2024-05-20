@@ -74,9 +74,10 @@ def build_objeto_de_entrenador_object(data):
     return {
         "id": data[0],
         "nombre_entrenador": data[1],
-        "id_entrenador": data[2],
-        "nombre_objeto": data[3],
-        "cantidad": data[4]
+        "nombre_objeto": data[2],
+        "id_entrenador": data[3],
+        "id_objeto": data[4],
+        "cantidad": data[5]
     }
 
 # Get all trainers
